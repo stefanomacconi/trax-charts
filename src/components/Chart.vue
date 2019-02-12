@@ -2,14 +2,14 @@
   <div class="row align-items-center">
     <div class="col-md-4 col-xs-4 pr-md-1">
       <div :class="getStatusClasses()" align="center"> 
-        {{ this.cdl.descrizione }}
+        {{ this.cdl.descrizioneCdL }}
       </div>
     </div>
     <div class="col-md-8 col-xs-8 pl-md-1">
       <b-progress height="60px" class="mt-1" :max="this.max" show-value>
-        <b-progress-bar :value="this.cdl.tempoLavorazione" variant="success"></b-progress-bar>
-        <b-progress-bar :value="this.cdl.tempoIndirette" variant="warning"></b-progress-bar>
-        <b-progress-bar :value="this.cdl.tempoNC" variant="danger"></b-progress-bar>
+        <b-progress-bar :value="this.cdl.tempiMacchina.percentualeOreDirette * 100" variant="success"></b-progress-bar>
+        <b-progress-bar :value="this.cdl.tempiMacchina.percentualeOreIndirette * 100" variant="warning"></b-progress-bar>
+        <b-progress-bar :value="this.cdl.tempiMacchina.percentualeNC * 100" variant="danger"></b-progress-bar>
       </b-progress>
     </div>
   </div>
