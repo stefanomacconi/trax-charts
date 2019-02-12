@@ -1,40 +1,16 @@
 <template>
-  <div class="container">
-    <div class="row">
-      <div class="col-md">
-        <b-progress height="50px" class="mt-1" :max="max" show-value>
-          <b-progress-bar :value="counter*(6/10)" variant="success"></b-progress-bar>
-          <b-progress-bar :value="counter*(2.5/10)" variant="warning"></b-progress-bar>
-          <b-progress-bar :value="counter*(1.5/10)" variant="danger"></b-progress-bar>
-        </b-progress>
-        <b-btn class="mt-4" @click="clicked">Click me</b-btn>
-      </div>
-      <div class="col-md">
-        <b-progress height="50px" class="mt-1" :max="max" show-value>
-          <b-progress-bar :value="counter*(6/10)" variant="success"></b-progress-bar>
-          <b-progress-bar :value="counter*(2.5/10)" variant="warning"></b-progress-bar>
-          <b-progress-bar :value="counter*(1.5/10)" variant="danger"></b-progress-bar>
-        </b-progress>
-        <b-btn class="mt-4" @click="clicked">Click me</b-btn>
+  <div class="row align-items-center">
+    <div class="col-md-4 col-xs-4 pr-md-1">
+      <div :class="getStatusClasses()" align="center"> 
+        {{ this.cdl.descrizione }}
       </div>
     </div>
-    <div class="row">
-      <div class="col-md">
-        <b-progress height="50px" class="mt-1" :max="max" show-value>
-          <b-progress-bar :value="counter*(6/10)" variant="success"></b-progress-bar>
-          <b-progress-bar :value="counter*(2.5/10)" variant="warning"></b-progress-bar>
-          <b-progress-bar :value="counter*(1.5/10)" variant="danger"></b-progress-bar>
-        </b-progress>
-        <b-btn class="mt-4" @click="clicked">Click me</b-btn>
-      </div>
-      <div class="col-md">
-        <b-progress height="50px" class="mt-1" :max="max" show-value>
-          <b-progress-bar :value="counter*(6/10)" variant="success"></b-progress-bar>
-          <b-progress-bar :value="counter*(2.5/10)" variant="warning"></b-progress-bar>
-          <b-progress-bar :value="counter*(1.5/10)" variant="danger"></b-progress-bar>
-        </b-progress>
-        <b-btn class="mt-4" @click="clicked">Click me</b-btn>
-      </div>
+    <div class="col-md-8 col-xs-8 pl-md-1">
+      <b-progress height="60px" class="mt-1" :max="this.max" show-value>
+        <b-progress-bar :value="this.cdl.tempoLavorazione" variant="success"></b-progress-bar>
+        <b-progress-bar :value="this.cdl.tempoIndirette" variant="warning"></b-progress-bar>
+        <b-progress-bar :value="this.cdl.tempoNC" variant="danger"></b-progress-bar>
+      </b-progress>
     </div>
   </div>
 </template>
@@ -43,16 +19,50 @@
 export default {
   data () {
     return {
-      counter: 45,
       max: 100
     }
   },
+  props: ['cdl'],
   methods: {
-    clicked () {
-      this.counter = Math.random() * this.max
-      // eslint-disable-next-line
-      console.log('Change progress to ' + Math.round(this.counter * 100) / 100)
+    getStatusClasses() {
+      return this.cdl.stato + " mt-1 m-status"
     }
   }
 }
 </script>
+
+<style>
+.progress {
+  border-style: solid;
+  border-width: 2px;
+  font-size: large;
+  font-weight: bold;
+}
+.m-status {
+  border-style: solid;
+  border-width: 2px;
+  border-radius: 0.25rem;
+  border-color: black;
+  height: 60px;
+  font-size: large;
+  font-weight: bold;
+  color: white;
+  /* text-shadow: 1px 0 0 black, -1px 0 0 black, 0 1px 0 black, 0 -1px 0 black,
+   1px 1px black, -1px -1px 0 black, 1px -1px 0 black, -1px 1px 0 black; */
+}
+.LAVORAZIONE {
+  background-color:#28A745;
+}
+.CAUSALE_IMPRODUTTIVA {
+  background-color:#DC3545;
+}
+.INDIRETTA {
+  background-color:#FFC107;
+}
+.INATTIVO {
+  background-color:#99aab5;
+}
+.LAVORAZIONE_IN_RITARDO {
+  background-color:#e45b06;
+}
+</style>
