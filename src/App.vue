@@ -1,8 +1,8 @@
 <template>
   <div id="app">
     <div class="container">
-      <div v-for="cdl in this.gruppiCdL['Asse 1 Assemblaggio 1']" :key="cdl.codice">
-        {{cdl.codice}}
+      {{ this.chiaveCorrente }}
+      <div v-for="cdl in this.gruppiCdL[this.chiaveCorrente]" :key="cdl.codice">
         <chart :cdl="cdl"/>
       </div>
     </div>
@@ -20,18 +20,26 @@ export default {
   },
   created() {
     this.fetchData();
-    this.timer = setInterval(this.fetchData, 30000);
+    this.timer = setInterval(this.fetchData, 60000); // 60s
   },
   data() {
     return {
       timer: '',
       path: 'metrics',
-      cdlPerGruppo: []
+      cdlPerGruppo: [],
+      index: 0,
+      chiaveCorrente: null
     }
   },
   computed: {
     gruppiCdL() {
       return this.cdlPerGruppo
+    },
+    chiaviGruppiCdL() {
+      return Object.keys(this.gruppiCdL)
+    },
+    maxIndex() {
+      return this.chiaviGruppiCdL.length
     }
   },
   methods: {
@@ -41,11 +49,24 @@ export default {
           // eslint-disable-next-line
           console.log(res)
           this.cdlPerGruppo = res.data.cdlPerGruppo
+          if (this.chiaviGruppiCdL.length === 0)
+            alert("Groups not found.")
+          this.setCurrentCdLGroup()
       }).catch(error => {
           // eslint-disable-next-line
           console.log(error)
           alert("Error during the REST call")
       })
+    },
+    setCurrentCdLGroup() {
+      this.chiaveCorrente = this.chiaviGruppiCdL[this.index]
+      this.increaseIndex()
+    },
+    increaseIndex() {
+      if (this.index === this.maxIndex)
+        this.index = 0
+      else 
+        this.index = this.index + 1
     },
     cancelAutoUpdate() { 
       clearInterval(this.timer) 
