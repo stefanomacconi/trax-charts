@@ -2,14 +2,14 @@
   <div class="row align-items-center">
     <div class="col-md-4 col-xs-4 pr-md-1">
       <div :class="getStatusClasses()" align="center"> 
-        {{ this.cdl.descrizioneCdL }}
+        {{ this.cdl.descrizioneCdL | capitalize }}
       </div>
     </div>
     <div class="col-md-8 col-xs-8 pl-md-1">
-      <b-progress height="60px" class="mt-1" :max="this.max" show-value>
-        <b-progress-bar :value="this.cdl.tempiMacchina.percentualeOreDirette * 100" variant="success"></b-progress-bar>
-        <b-progress-bar :value="this.cdl.tempiMacchina.percentualeOreIndirette * 100" variant="warning"></b-progress-bar>
-        <b-progress-bar :value="this.cdl.tempiMacchina.percentualeNC * 100" variant="danger"></b-progress-bar>
+      <b-progress height="70px" class="mt-1" :max="this.max" show-value>
+        <b-progress-bar :value="this.cdl.tempiMacchina.percentualeOreDirette" variant="success"></b-progress-bar>
+        <b-progress-bar :value="this.cdl.tempiMacchina.percentualeOreIndirette" variant="warning"></b-progress-bar>
+        <b-progress-bar :value="this.cdl.tempiMacchina.percentualeNC" variant="danger"></b-progress-bar>
       </b-progress>
     </div>
   </div>
@@ -38,12 +38,15 @@ export default {
   font-size: large;
   font-weight: bold;
 }
+.progress-bar {
+  color: #e9ecef;
+}
 .m-status {
   border-style: solid;
   border-width: 2px;
   border-radius: 0.25rem;
   border-color: black;
-  height: 60px;
+  height: 70px;
   font-size: large;
   font-weight: bold;
   color: white;
