@@ -1,13 +1,16 @@
 <template>
   <div id="app">
     <div class="container-fluid">
+      <!-- Loading dialog -->
       <div v-if="this.attendereDialog">
         <br>
         <img src="./assets/logo_emerson.png" class="img-fluid">
         <br><br>
         <b-progress :value="100" animated height="50px" variant="dark"></b-progress>
       </div>
+      <!-- div with graphs -->
       <div v-if="!this.attendereDialog">
+        <!-- title navbar -->
         <div class="row">
           <div class="col-xl-2">
             <img src="./assets/logo_emerson.png" class="d-none d-xl-block topleft">
@@ -18,9 +21,11 @@
           </div>  
         </div>
         <div>
-          <template v-for="(cdlGroup, index) in this.groupRows">
+          <!-- loop in CdL Group -->
+          <template v-for="(cdlGroupRow, index) in this.groupRows">
             <div class="row" :key="index">
-              <template v-for="cdl in cdlGroup">
+              <!-- loop charts in row -->
+              <template v-for="cdl in cdlGroupRow">
                 <div class="col-lg-4 pl-lg-2 pr-lg-2" :key="cdl.codice">
                   <chart :cdl="cdl"/>
                 </div>
@@ -47,24 +52,40 @@ export default {
     chart
   },
   created() {
+    // when created I call the rest resource to fetch data for the first time
     this.fetchData();
+    // automatically refresh data in time
+    // note that also the CdL Group will be updated in fetchData
     this.timer = setInterval(this.fetchData, this.intervalTime)
   },
   data() {
     return {
       attendereDialog: true,
+      // timer for automatically refresh data and CdL Group
       timer: '',
+      // timer to automatically refresh graphs with the same group
+      // if the number of CdL exceed the max number of graphs to show in a single page
       timer4Page: '',
+      // REST path
       path: 'metrics',
+      // what returns the REST call
       cdlPerGruppo: [],
+      // CdL Group
       arrayCdL: [],
+      // cycle in Group
       index: 0,
+      // cycle in Page
       pageIndex: 0,
+      // current CdL Group
       chiaveCorrente: null,
       titoloGruppo: "",
+      // interval time for data refresh and CdL Group refresh
       intervalTime: 10000, // 120s
+      // max number of graphs for row
       charts4Rows: 3,
+      // max number of rows to show in a page
       maxRows2Display: 6,
+      // used to cycle single group
       pages: []
     }
   },
@@ -79,6 +100,8 @@ export default {
       return this.chiaviGruppiCdL.length
     },
     groupRows() {
+      // main property. CdL in group splitted for row
+      // will be cycled in template
       return this.splitArr(this.arrayCdL, this.charts4Rows)
     }
   },
@@ -103,6 +126,7 @@ export default {
       })
     },
     setCurrentCdLGroup() {
+      // set current CdL Group by using index
       if (this.$route.params.gruppoCdL)
         this.chiaveCorrente = this.$route.params.gruppoCdL.toString().toLowerCase()
       else {
@@ -143,6 +167,7 @@ export default {
     cancelAutoUpdate4Page() { 
       clearInterval(this.timer4Page) 
     },
+    // split array in groups
     splitArr(arr, groupSize) {
       if (!arr || arr.length === 0)
         return []
