@@ -5,10 +5,10 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import BootstrapVue from 'bootstrap-vue'
 import App from './App.vue'
-import axios from 'axios'
+// import axios from 'axios'
 import {routes} from './routes'
 
-axios.defaults.baseURL = 'http://localhost:8099/'
+// axios.defaults.baseURL = 'http://localhost:8099/'
 
 Vue.use(VueRouter)
 Vue.use(BootstrapVue);

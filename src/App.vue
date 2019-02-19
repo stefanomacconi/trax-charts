@@ -67,7 +67,7 @@ export default {
       // if the number of CdL exceed the max number of graphs to show in a single page
       timer4Page: '',
       // REST path
-      path: 'metrics',
+      path: 'http://localhost:8099/metrics',
       // what returns the REST call
       cdlPerGruppo: [],
       // CdL Group
@@ -97,7 +97,7 @@ export default {
       return Object.keys(this.gruppiCdL)
     },
     maxIndex() {
-      return this.chiaviGruppiCdL.length
+      return this.chiaviGruppiCdL.length - 1
     },
     groupRows() {
       // main property. CdL in group splitted for row
