@@ -31,7 +31,7 @@
                 </div>
               </template>
             </div>
-            <!-- <br :key="index"> -->
+             <br :key="index">
           </template>
         </div>
       </div>
@@ -71,7 +71,7 @@ export default {
       // if the number of CdL exceed the max number of graphs to show in a single page
       timer4Page: '',
       // REST path
-      path: config.dataPath ? config.dataPath : 'http://localhost:8099/metrics',
+      path: config.dataPath ? config.dataPath : 'http://localhost:8080/prodweb/metrics',
       // what returns the REST call
       cdlPerGruppo: [],
       // CdL Group
@@ -88,7 +88,7 @@ export default {
       // max number of graphs for row
       charts4Rows: config.chartsForRow && config.chartsForRow <= 12 ? config.chartsForRow : 3, // default 3
       // max number of rows to show in a page
-      maxRows2Display: config.chartsForColumn ? config.chartsForColumn : 6, // default 6,
+      maxRows2Display: config.rowsForPage ? config.rowsForPage : 6, // default 6,
       // used to cycle single group
       pages: []
     }
