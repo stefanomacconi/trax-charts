@@ -18,10 +18,16 @@ const router = new VueRouter({
   routes
 })
 
-Vue.filter('capitalize', function (value) {
+Vue.filter('toUpperCase', function (value) {
   if (!value) return ''
   value = value.toString()
   return value.toUpperCase();
+})
+
+Vue.filter('toLowerCase', function (value) {
+  if (!value) return ''
+  value = value.toString()
+  return value.toLowerCase();
 })
 
 new Vue({

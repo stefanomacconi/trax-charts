@@ -1,12 +1,12 @@
 <template>
   <div class="row align-items-center">
-    <div class="col-md-4 col-xs-4 pr-md-1">
+    <div class="col-md-4 col-xs-4 pr-md-0">
       <div :class="getStatusClasses()" align="center"> 
-        {{ this.cdl.descrizioneCdL | capitalize }}
+        {{ this.cdl.descrizioneCdL | toUpperCase }}
       </div>
     </div>
     <div class="col-md-8 col-xs-8 pl-md-1">
-      <b-progress height="70px" class="mt-1" :max="this.max" show-value>
+      <b-progress height="80px" class="mt-1" :max="this.max" show-value>
         <b-progress-bar :value="this.cdl.tempiMacchina.percentualeOreDirette" variant="success"></b-progress-bar>
         <b-progress-bar :value="this.cdl.tempiMacchina.percentualeOreIndirette" variant="warning"></b-progress-bar>
         <b-progress-bar :value="this.cdl.tempiMacchina.percentualeNC" variant="danger"></b-progress-bar>
@@ -40,14 +40,15 @@ export default {
 }
 .progress-bar {
   color: #e9ecef;
+  /* font-size: 120%; */
 }
 .m-status {
   border-style: solid;
   border-width: 2px;
   border-radius: 0.25rem;
   border-color: black;
-  height: 70px;
-  font-size: large;
+  height: 80px;
+  /* font-size: 120%; */
   font-weight: bold;
   color: white;
   /* text-shadow: 1px 0 0 black, -1px 0 0 black, 0 1px 0 black, 0 -1px 0 black,
