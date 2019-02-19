@@ -31,7 +31,7 @@
                 </div>
               </template>
             </div>
-             <br :key="index">
+             <br :key="index + Math.floor(Math.random() * 1000) + 1">
           </template>
         </div>
       </div>
