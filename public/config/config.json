@@ -1,0 +1,10 @@
+{ 
+    "__dataPath": "REST path", 
+    "dataPath": "http://localhost:8099/metrics", 
+    "__intervalTime": "interval time [ms] for data refresh and CdL Group refresh", 
+    "intervalTime": 120000, 
+    "__chartsForRow": "number of graphs for row [default : 3, max : 12]", 
+    "chartsForRow": 3, 
+    "__chartsForColumn": "number of columns to show in a page [default : 6]", 
+    "chartsForColumn": 6 
+}

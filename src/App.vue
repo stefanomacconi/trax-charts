@@ -26,7 +26,7 @@
             <div class="row" :key="index">
               <!-- loop charts in row -->
               <template v-for="cdl in cdlGroupRow">
-                <div class="col-lg-4 pl-lg-2 pr-lg-2" :key="cdl.codice">
+                <div :class="getRowClasses()" :key="cdl.codice">
                   <chart :cdl="cdl"/>
                 </div>
               </template>
@@ -40,6 +40,8 @@
 </template>
 
 <script>
+import config from '../public/config/config.json'
+
 import chart from './components/Chart.vue'
 import axios from 'axios'
 
@@ -60,6 +62,8 @@ export default {
   },
   data() {
     return {
+      // public json config file
+      config,
       attendereDialog: true,
       // timer for automatically refresh data and CdL Group
       timer: '',
@@ -67,7 +71,7 @@ export default {
       // if the number of CdL exceed the max number of graphs to show in a single page
       timer4Page: '',
       // REST path
-      path: 'http://localhost:8099/metrics',
+      path: config.dataPath ? config.dataPath : 'http://localhost:8099/metrics',
       // what returns the REST call
       cdlPerGruppo: [],
       // CdL Group
@@ -80,11 +84,11 @@ export default {
       chiaveCorrente: null,
       titoloGruppo: "",
       // interval time for data refresh and CdL Group refresh
-      intervalTime: 10000, // 120s
+      intervalTime: config.intervalTime ? config.intervalTime : 120000, // default 120s
       // max number of graphs for row
-      charts4Rows: 3,
+      charts4Rows: config.chartsForRow && config.chartsForRow <= 12 ? config.chartsForRow : 3, // default 3
       // max number of rows to show in a page
-      maxRows2Display: 6,
+      maxRows2Display: config.chartsForColumn ? config.chartsForColumn : 6, // default 6,
       // used to cycle single group
       pages: []
     }
@@ -188,6 +192,11 @@ export default {
       }
       else 
         this.pageIndex = this.pageIndex + 1
+    },
+    getRowClasses() {
+      const maxGridValue = 12
+      var colSize = Math.floor(maxGridValue / this.charts4Rows)
+      return "col-lg-" + colSize + " pl-lg-2 pr-lg-2"
     }
   },
   beforeDestroy() {
