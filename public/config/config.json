@@ -1,6 +1,6 @@
 { 
     "__dataPath": "REST path", 
-    "dataPath": "http://localhost:8080/prodweb/metrics", 
+    "dataPath": "http://10.134.11.199:8080/prodweb/metrics",
     "__intervalTime": "interval time [ms] for data refresh and CdL Group refresh", 
     "intervalTime": 120000, 
     "__chartsForRow": "number of graphs for row [default : 3, max : 12]", 
