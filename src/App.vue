@@ -131,8 +131,8 @@ export default {
     },
     setCurrentCdLGroup() {
       // set current CdL Group by using index
-      if (this.$route.params.gruppoCdL)
-        this.chiaveCorrente = this.$route.params.gruppoCdL.toString().toLowerCase()
+      if (this.$route.path !== '/')
+        this.chiaveCorrente = this.$route.path.substr(1).toLowerCase()
       else {
         this.chiaveCorrente = this.chiaviGruppiCdL[this.index]
         this.increaseIndex()
@@ -154,8 +154,7 @@ export default {
       // calc title
       if (this.gruppiCdL[this.chiaveCorrente].length > 0 && 
         this.gruppiCdL[this.chiaveCorrente][0].descrizioneGruppo)
-        this.titoloGruppo = this.gruppiCdL[this.chiaveCorrente][0].descrizioneGruppo +
-          " - " + this.gruppiCdL[this.chiaveCorrente][0].codiceGruppo
+        this.titoloGruppo = this.gruppiCdL[this.chiaveCorrente][0].descrizioneGruppo
       else
         this.titoloGruppo = this.chiaveCorrente
     },
