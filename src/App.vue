@@ -36,10 +36,10 @@
         </div>
         <div class="row">
           <div class="col-xl-6">
-            <img style="height: 250px" src="./assets/stato_macchina.png" class="d-none d-xl-block topleft">
+            <img style="height: 200px; width: auto;" src="./assets/stato_macchina.png" class="d-none d-xl-block">
           </div>  
           <div class="col-xl-6">
-            <img style="height: 250px" src="./assets/tempi_macchina.png" class="d-none d-xl-block topleft">
+            <img style="height: 200px; width: auto;" src="./assets/tempi_macchina.png" class="d-none d-xl-block">
           </div>  
         </div>
       </div>
@@ -48,7 +48,7 @@
 </template>
 
 <script>
-import config from '../public/config/config.json'
+//import config from '../public/config/config.json'
 
 import chart from './components/Chart.vue'
 import axios from 'axios'
@@ -62,24 +62,35 @@ export default {
     chart
   },
   created() {
-    // when created I call the rest resource to fetch data for the first time
-    this.fetchData();
-    // automatically refresh data in time
-    // note that also the CdL Group will be updated in fetchData
-    this.timer = setInterval(this.fetchData, this.intervalTime)
+    // fetch configuration
+    this.fetchConfig().then((intervalTime) => {
+      // set intervalTime
+      this.intervalTime = intervalTime
+      // when created I call the rest resource to fetch data for the first time
+      this.fetchData()
+      // automatically refresh data in time
+      // note that also the CdL Group will be updated in fetchData
+      this.timer = setInterval(this.fetchData, this.intervalTime)
+    })
+    // automatically refresh config in time
+    this.configTimer = setInterval(this.fetchConfig, this.intervalConfigTime)
   },
   data() {
     return {
-      // public json config file
-      config,
+      // config path
+      configPath: 'http://localhost:8080/prodweb/configuration',
+      // public json config file - REPLACED WITH REST CALL CONFIGURATION
+      // config,
       attendereDialog: true,
       // timer for automatically refresh data and CdL Group
       timer: '',
+      // timer for automatically refresh config data
+      configTimer: '',
       // timer to automatically refresh graphs with the same group
       // if the number of CdL exceed the max number of graphs to show in a single page
       timer4Page: '',
       // REST path
-      path: config.dataPath ? config.dataPath : 'http://localhost:8080/prodweb/metrics',
+      path : 'http://localhost:8080/prodweb/metrics',
       // what returns the REST call
       cdlPerGruppo: [],
       // CdL Group
@@ -92,16 +103,27 @@ export default {
       chiaveCorrente: null,
       titoloGruppo: "",
       // interval time for data refresh and CdL Group refresh
-      intervalTime: config.intervalTime ? config.intervalTime : 120000, // default 120s
+      intervalTime: 120000, // default 120s
+      // interval time for config data refresh
+      intervalConfigTime: 30000, // default 30s
       // max number of graphs for row
-      charts4Rows: config.chartsForRow && config.chartsForRow <= 12 ? config.chartsForRow : 3, // default 3
+      charts4Rows: 3, // default 3
       // max number of rows to show in a page
-      maxRows2Display: config.rowsForPage ? config.rowsForPage : 6, // default 6,
+      maxRows2Display: 6, // default 6,
       // used to cycle single group
       pages: []
     }
   },
   computed: {
+    computedCharts4Rows() {
+      return this.charts4Rows
+    },
+    computedMaxRows2Display() {
+      return this.maxRows2Display
+    },
+    computedPath() {
+      return this.path
+    },
     gruppiCdL() {
       return this.cdlPerGruppo
     },
@@ -114,15 +136,41 @@ export default {
     groupRows() {
       // main property. CdL in group splitted for row
       // will be cycled in template
-      return this.splitArr(this.arrayCdL, this.charts4Rows)
+      return this.splitArr(this.arrayCdL, this.computedCharts4Rows)
     }
   },
   methods: {
+    fetchConfig() {
+      // *** ATTENTION ***
+      // because of the setInterval in created, the intervalTime, can be updated only with a refresh (F5) page
+      const app = this;
+      return new Promise(function(resolve, reject) {
+        axios.get(app.configPath)
+        .then(res => {
+            // eslint-disable-next-line
+            console.log("*** CONFIG ***", res)
+            if (res.data) {
+              res.data.dataPath ? app.path = res.data.dataPath : app.path = 'http://localhost:8080/prodweb/metrics'
+              res.data.chartsForRow && res.data.chartsForRow <= 12 ? app.charts4Rows = res.data.chartsForRow : app.charts4Rows = 3
+              res.data.rowsForPage ? app.maxRows2Display = res.data.rowsForPage : app.maxRows2Display = 5
+              resolve(res.data.intervalTime ? res.data.intervalTime : 120000) // default 120s
+            } else {
+              alert("Data configuration is empty")
+              reject()
+            }
+        }).catch(error => {
+            // eslint-disable-next-line
+            console.log(error)
+            alert("Unable to fetch the configuration")
+            reject()
+        })
+      });
+    },
     fetchData() {
-      axios.get(this.path)
+      axios.get(this.computedPath)
       .then(res => {
           // eslint-disable-next-line
-          console.log(res)
+          console.log("*** DATA ***", res)
           this.attendereDialog = false
           this.cdlPerGruppo = res.data.cdlPerGruppo
           if (this.chiaviGruppiCdL.length === 0) {
@@ -147,7 +195,7 @@ export default {
       }
       // check if the CdLGroup has more graphs than we can show
       var arrayCdL = this.gruppiCdL[this.chiaveCorrente]
-      var numMaxChars4Page = this.maxRows2Display * this.charts4Rows
+      var numMaxChars4Page = this.computedMaxRows2Display * this.computedCharts4Rows
       if (this.gruppiCdL[this.chiaveCorrente].length > numMaxChars4Page) {
         this.pages = this.splitArr(arrayCdL, numMaxChars4Page)
         var numPages = this.pages.length
@@ -174,6 +222,9 @@ export default {
     },
     cancelAutoUpdate() { 
       clearInterval(this.timer) 
+    },
+    cancelAutoUpdateConfig() { 
+      clearInterval(this.configTimer) 
     },
     cancelAutoUpdate4Page() { 
       clearInterval(this.timer4Page) 
@@ -202,12 +253,15 @@ export default {
     },
     getRowClasses() {
       const maxGridValue = 12
-      var colSize = Math.floor(maxGridValue / this.charts4Rows)
+      var colSize = Math.floor(maxGridValue / this.computedCharts4Rows)
       return "col-lg-" + colSize + " pl-lg-2 pr-lg-2"
     }
   },
   beforeDestroy() {
-    clearInterval(this.timer)
+    this.cancelAutoUpdate()
+    this.cancelAutoUpdateConfig()
+    // clearInterval(this.timer)
+    // clearInterval(this.configTimer)
     clearInterval(this.timer4Page)
   }
 }
