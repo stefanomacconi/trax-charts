@@ -187,8 +187,11 @@ export default {
     },
     setCurrentCdLGroup() {
       // set current CdL Group by using index
-      if (this.$route.path !== '/')
-        this.chiaveCorrente = this.$route.path.substr(1).toLowerCase()
+      if (this.$route.path !== '/') {
+        // visual/#/group/[cdlGroup]
+        let splittedPath = this.$route.path.split("/")
+        this.chiaveCorrente = splittedPath[splittedPath.length - 1]
+      }
       else {
         this.chiaveCorrente = this.chiaviGruppiCdL[this.index]
         this.increaseIndex()

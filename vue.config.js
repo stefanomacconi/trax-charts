@@ -1,14 +1,14 @@
 const { WebpackWarPlugin } = require('webpack-war-plugin');
 
 module.exports = {
-    publicPath: '/monitor',
+    publicPath: '/visual',
     configureWebpack: () => {
         if (process.env.NODE_ENV === 'production') {
             // mutate for production...
             return {
                 plugins: [
                     new WebpackWarPlugin({
-                        archiveName: 'monitor',
+                        archiveName: 'visual',
                     })
                 ],
                 devServer: {
