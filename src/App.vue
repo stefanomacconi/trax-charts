@@ -16,9 +16,9 @@
             <img src="./assets/logo_emerson.png" class="d-none d-xl-block topleft">
           </div>  
           <div class="col-xl-10">
-            <h1 class="display-3 text-center">{{ this.titoloGruppo | toUpperCase }}</h1>
+            <h1 class="cdl-title display-3 text-center">{{ this.titoloGruppo | toUpperCase }}</h1>
             <hr>  
-          </div>  
+          </div>
         </div>
         <div>
           <!-- loop in CdL Group -->
@@ -33,6 +33,14 @@
             </div>
              <br :key="index + Math.floor(Math.random() * 1000) + 1">
           </template>
+        </div>
+        <div class="row">
+          <div class="col-xl-6">
+            <img style="height: 250px" src="./assets/stato_macchina.png" class="d-none d-xl-block topleft">
+          </div>  
+          <div class="col-xl-6">
+            <img style="height: 250px" src="./assets/tempi_macchina.png" class="d-none d-xl-block topleft">
+          </div>  
         </div>
       </div>
     </div>
@@ -219,5 +227,9 @@ img {
   font-size: 18px;
   width: auto;
   height: 80px;
+}
+.cdl-title {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important;
+  font-weight: 500 !important;
 }
 </style>

@@ -1,10 +1,10 @@
 { 
     "__dataPath": "REST path", 
-    "dataPath": "http://127.0.0.1:8099/metrics",
+    "dataPath": "http://10.64.172.78:8080/prodweb/metrics",
     "__intervalTime": "interval time [ms] for data refresh and CdL Group refresh", 
     "intervalTime": 30000, 
     "__chartsForRow": "number of graphs for row [default : 3, max : 12]", 
     "chartsForRow": 3, 
-    "__rowsForPage": "number of rows to show in a page [default : 5]", 
-    "rowsForPage": 5 
+    "__rowsForPage": "number of rows to show in a page [default : 6]", 
+    "rowsForPage": 6 
 }

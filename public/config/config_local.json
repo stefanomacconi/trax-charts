@@ -5,6 +5,6 @@
     "intervalTime": 30000, 
     "__chartsForRow": "number of graphs for row [default : 3, max : 12]", 
     "chartsForRow": 3, 
-    "__rowsForPage": "number of rows to show in a page [default : 5]", 
-    "rowsForPage": 5 
+    "__rowsForPage": "number of rows to show in a page [default : 6]", 
+    "rowsForPage": 6 
 }

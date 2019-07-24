@@ -2,7 +2,7 @@
   <div class="row align-items-center">
     <div class="col-md-4 col-xs-4 pr-md-0">
       <div :class="getStatusClasses()" align="center"> 
-        {{ this.cdl.descrizioneCdL | toUpperCase }}
+        {{ this.cdl.descrizioneCdL | toUpperCase }} ({{ this.cdl.nrOperatori }})
       </div>
     </div>
     <div class="col-md-8 col-xs-8 pl-md-1">
@@ -17,7 +17,7 @@
 
 <script>
 export default {
-  data () {
+  data() {
     return {
       max: 100
     }
@@ -55,7 +55,7 @@ export default {
    1px 1px black, -1px -1px 0 black, 1px -1px 0 black, -1px 1px 0 black; */
 }
 .LAVORAZIONE {
-  background-color:#28A745;
+  background-color:#40c4ff;
 }
 .CAUSALE_IMPRODUTTIVA {
   background-color:#DC3545;
@@ -67,6 +67,6 @@ export default {
   background-color:#99aab5;
 }
 .LAVORAZIONE_IN_RITARDO {
-  background-color:#e45b06;
+  background-color:#ff8f00;
 }
 </style>
