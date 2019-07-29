@@ -1,7 +1,7 @@
 <template>
   <div class="row align-items-center">
     <div class="col-md-4 col-xs-4 pr-md-0">
-      <div :class="getStatusClasses()" align="center"> 
+      <div :class="getStatusClasses()" align="center" @click="goToCdLSituation()"> 
         {{ this.cdl.descrizioneCdL | toUpperCase }} ({{ this.cdl.nrOperatori }})
       </div>
     </div>
@@ -26,6 +26,9 @@ export default {
   methods: {
     getStatusClasses() {
       return this.cdl.stato + " mt-1 m-status"
+    },
+    goToCdLSituation() {
+      this.$router.push({ name: 'situazioneLav', params: { cdl: this.cdl.codiceCdL }})
     }
   }
 }

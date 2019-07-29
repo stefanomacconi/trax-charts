@@ -3,6 +3,7 @@ import 'bootstrap-vue/dist/bootstrap-vue.css'
 
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import store from './store/store'
 import BootstrapVue from 'bootstrap-vue'
 import App from './App.vue'
 // import axios from 'axios'
@@ -32,5 +33,6 @@ Vue.filter('toLowerCase', function (value) {
 
 new Vue({
   render: h => h(App),
-  router
+  router,
+  store
 }).$mount('#app')
