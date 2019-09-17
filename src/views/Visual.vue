@@ -8,27 +8,19 @@
       <!-- div with graphs -->
       <div v-if="!this.attendereDialog">
         <!-- title navbar -->
-        <div class="row">
-          <div class="col-xl-2">
-            <img src="../assets/logo_emerson.png" class="d-none d-xl-block topleft">
-          </div>  
-          <div class="col-xl-10">
-            <h1 class="cdl-title display-3 text-center">{{ this.titoloGruppo | toUpperCase }}</h1>
-            <hr>  
-          </div>
-        </div>
+        <navbar :title="this.titoloGruppo"></navbar>
         <div>
           <!-- loop in CdL Group -->
           <template v-for="(cdlGroupRow, index) in this.groupRows">
-            <div class="row" :key="index + Math.floor(Math.random() * 1000) + 1">
+            <div class="row" :key="index + Math.floor(Math.random() * 1000000) + 1">
               <!-- loop charts in row -->
               <template v-for="cdl in cdlGroupRow">
-                <div :class="getRowClasses()" :key="cdl.codice">
+                <div :class="getRowClasses()" :key="cdl.codiceCdL + Math.floor(Math.random() * 1000000) + 1">
                   <chart :cdl="cdl"/>
                 </div>
               </template>
             </div>
-            <br :key="index + Math.floor(Math.random() * 1000) + 1">
+            <br :key="index + Math.floor(Math.random() * 1000000) + 1">
           </template>
         </div>
         <div class="row">
@@ -50,6 +42,7 @@ import axios from 'axios'
 
 import Chart from '../components/Chart.vue'
 import WaitingDialog from '../components/Waiting.vue'
+import Navbar from '../components/Navbar'
 
 // import JQuery from 'jquery'
 // let $ = JQuery
@@ -57,7 +50,8 @@ import WaitingDialog from '../components/Waiting.vue'
 export default {
   components: {
     Chart,
-    WaitingDialog
+    WaitingDialog,
+    Navbar
   },
   created() {
     // fetch configuration
@@ -277,17 +271,5 @@ img {
   margin-left: auto;
   margin-right: auto;
   width: 50%;
-}
-.topleft {
-  position: absolute;
-  top: 8px;
-  left: 16px;
-  font-size: 18px;
-  width: auto;
-  height: 80px;
-}
-.cdl-title {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important;
-  font-weight: 500 !important;
 }
 </style>

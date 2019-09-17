@@ -28,7 +28,13 @@ export default {
       return this.cdl.stato + " mt-1 m-status"
     },
     goToCdLSituation() {
-      this.$router.push({ name: 'situazioneLav', params: { cdl: this.cdl.codiceCdL }})
+      this.$router.push({
+        name: 'situazioneLav', 
+        params: {
+          cdl: this.cdl.codiceCdL,
+          descrizioneCdL: this.cdl.descrizioneCdL 
+        }
+      })
     }
   }
 }

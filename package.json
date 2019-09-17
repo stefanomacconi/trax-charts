@@ -14,6 +14,7 @@
     "jquery": "^3.4.1",
     "popper.js": "^1.14.7",
     "vue": "^2.5.22",
+    "vue-moment": "^4.0.0",
     "vue-router": "^3.0.2",
     "vuex": "^3.1.1",
     "webpack-war-plugin": "^1.0.0-beta.3"

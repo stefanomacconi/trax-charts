@@ -6,13 +6,21 @@ import VueRouter from 'vue-router'
 import store from './store/store'
 import BootstrapVue from 'bootstrap-vue'
 import App from './App.vue'
-// import axios from 'axios'
 import {routes} from './routes'
 
-// axios.defaults.baseURL = 'http://localhost:8099/'
+// import axios from 'axios'
+// axios.defaults.baseURL = 'http://localhost:8080/'
 
 Vue.use(VueRouter)
 Vue.use(BootstrapVue);
+
+// moment
+const moment = require('moment')
+require('moment/locale/it')
+ 
+Vue.use(require('vue-moment'), {
+    moment
+})
 
 const router = new VueRouter({
   // mode: 'history',

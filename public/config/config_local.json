@@ -1,6 +1,6 @@
 { 
     "__dataPath": "REST path", 
-    "dataPath": "http://127.0.0.1:8099/metrics",
+    "dataPath": "http://127.0.0.1:8080/metrics",
     "__intervalTime": "interval time [ms] for data refresh and CdL Group refresh", 
     "intervalTime": 30000, 
     "__chartsForRow": "number of graphs for row [default : 3, max : 12]", 
