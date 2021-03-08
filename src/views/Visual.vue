@@ -69,9 +69,9 @@ export default {
     return {
       // config path
       // LOCAL
-      // configPath: 'http://localhost:8080/prodweb/configuration',
+      configPath: 'http://localhost:8080/prodweb/configuration',
       // RAIMONDI
-      configPath: 'http://10.64.172.78:8080/prodweb/configuration',
+      // configPath: 'http://10.64.172.78:8080/prodweb/configuration',
       // public json config file - REPLACED WITH REST CALL CONFIGURATION
       // config,
       attendereDialog: true,
